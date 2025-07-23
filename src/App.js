@@ -15,9 +15,10 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import CartScreen from './screens/CartScreen';
 import UploadPrescriptionScreen from './screens/UploadPrescriptionScreen';
-
-// Import your Checkout screen
 import CheckoutScreen from './screens/CheckoutScreen';
+
+// ✅ NEW: Import the Product Detail Screen
+import ProductDetailScreen from './screens/ProductDetailScreen';
 
 function App() {
   const location = useLocation();
@@ -26,7 +27,6 @@ function App() {
   const hideNavbar = false;
 
   return (
-    // Wrap the entire app in CartProvider to provide cart state globally
     <CartProvider>
       {!hideNavbar && <Navbar />}
 
@@ -41,9 +41,10 @@ function App() {
         <Route path="/register" element={<RegisterScreen />} />
         <Route path="/cart" element={<CartScreen />} />
         <Route path="/upload-prescription" element={<UploadPrescriptionScreen />} />
-
-        {/* Add Checkout Route */}
         <Route path="/checkout" element={<CheckoutScreen />} />
+
+        {/* ✅ NEW Product Detail Route */}
+        <Route path="/product/:id" element={<ProductDetailScreen />} />
       </Routes>
     </CartProvider>
   );

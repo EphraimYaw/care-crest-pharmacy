@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
-import Footer from '../components/Footer';  // Import your existing Footer component here
+import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 const categories = ['All', 'Pain Relief', 'Vitamins', 'Supplements', 'Personal Care', 'Skincare'];
 const brands = ['CareCrest', 'PharmaPlus', 'MediHealth', 'WellnessCo'];
@@ -13,6 +14,7 @@ const products = [
   { id: 5, name: 'Ibuprofen', category: 'Pain Relief', brand: 'MediHealth', price: 18, oldPrice: 22, discountPercent: 18, rating: 4.1, image: '/assets/products/ibuprofen.png' },
   { id: 6, name: 'Baby Wipes', category: 'Personal Care', brand: 'PharmaPlus', price: 12, oldPrice: 15, discountPercent: 20, rating: 4.6, image: '/assets/products/wipes.png' },
   { id: 7, name: 'Omega 3 Supplement', category: 'Supplements', brand: 'CareCrest', price: 28, oldPrice: 33, discountPercent: 15, rating: 4.3, image: '/assets/products/omega3.png' },
+  // Add more if needed...
 ];
 
 const StarRating = ({ rating }) => {
@@ -53,10 +55,10 @@ function CatalogScreen() {
   const paginatedProducts = filteredProducts.slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage);
 
   const goToPage = (page) => {
-    if(page >= 1 && page <= totalPages) {
+    if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
-  }
+  };
 
   return (
     <>
@@ -100,25 +102,31 @@ function CatalogScreen() {
               <p>No products found.</p>
             ) : (
               paginatedProducts.map(product => (
-                <div key={product.id} style={styles.productCard}>
-                  {product.discountPercent > 0 && (
-                    <span style={styles.discountTag}>
-                      {product.discountPercent}% off
-                    </span>
-                  )}
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    style={styles.productImage}
-                  />
-                  <h4 style={styles.productName}>{product.name}</h4>
-                  <p style={styles.productCategory}>{product.category}</p>
-                  <StarRating rating={product.rating} />
-                  <div style={styles.priceSection}>
-                    <span style={styles.price}>GHS {product.price.toFixed(2)}</span>
-                    <span style={styles.oldPrice}>GHS {product.oldPrice.toFixed(2)}</span>
+                <Link
+                  key={product.id}
+                  to={`/product/${product.id}`}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <div style={styles.productCard}>
+                    {product.discountPercent > 0 && (
+                      <span style={styles.discountTag}>
+                        {product.discountPercent}% off
+                      </span>
+                    )}
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      style={styles.productImage}
+                    />
+                    <h4 style={styles.productName}>{product.name}</h4>
+                    <p style={styles.productCategory}>{product.category}</p>
+                    <StarRating rating={product.rating} />
+                    <div style={styles.priceSection}>
+                      <span style={styles.price}>GHS {product.price.toFixed(2)}</span>
+                      <span style={styles.oldPrice}>GHS {product.oldPrice.toFixed(2)}</span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))
             )}
           </main>
@@ -176,12 +184,12 @@ const styles = {
     fontSize: '1rem',
     color: '#555',
     cursor: 'pointer',
-    borderBottom: 'none',   // NO underline for inactive
+    borderBottom: 'none',
     transition: 'border-color 0.3s ease, color 0.3s ease',
   },
   activeCategoryTab: {
     color: '#cd1643',
-    borderBottom: '3px solid #cd1643',  // underline ONLY for active
+    borderBottom: '3px solid #cd1643',
     fontWeight: '700',
   },
   sidebar: {
